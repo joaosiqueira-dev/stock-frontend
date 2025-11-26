@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+}
