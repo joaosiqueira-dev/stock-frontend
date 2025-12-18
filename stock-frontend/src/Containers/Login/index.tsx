@@ -1,7 +1,7 @@
 import { useContext, } from "react"
 import { loginUser } from "../../services/utils/user"
 import CreateUserContext from "../../contexts/userContext"
-import DashboardIcon from '../../assets/dashboard-icon.png'
+import DashboardIcon from '../../assets/caixa-aberta.png'
 import { useNavigate } from "react-router-dom"
 
 function Login() {
@@ -16,9 +16,18 @@ function Login() {
             <input className="bg-[#1F2937] w-80 p-3 rounded-md" value={email} onChange={(e) => setEmail(e.target.value)} />
             <p>Senha</p>
             <input className="bg-[#1F2937] w-80 p-3 rounded-md" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button type="button" className="p-3 my-2 hover:bg-[#0F172A] hover:text-white font-bold cursor-pointer border-1 border-white rounded-md bg-white text-[#0F172A] duration-500" onClick={() => loginUser(email, password)}>Entrar</button>
+            <button type="button" className="p-3 my-2 hover:bg-[#0F172A] hover:text-white font-bold cursor-pointer border-1 border-white rounded-md bg-white text-[#0F172A] duration-500" onClick={async () => {
+            const token = await loginUser(email, password)
+            
+            if (token) {
+                navigate("/dashboard")
+            }
+            }
+        } 
+            >Entrar</button>
+                
             </form>
-            <p className="text-blue-800" onClick={() => navigate("/sign-up")}>Não tem uma conta ainda? Cadastre-se</p>
+            <p className="text-blue-800 cursor-pointer hover:underline" onClick={() => navigate("/sign-up")}>Não tem uma conta ainda? Cadastre-se</p>
         </div>
     )
 }

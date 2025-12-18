@@ -1,19 +1,24 @@
+import { toast } from "react-toastify"
 import api from "../api"
 
-interface UpdateUserData {
-    nome?: string
-    email?: string
-    password?: string
+interface CreateUserData {
+    name: string
+    email: string
+    password: string
 }
 
-export async function createUser(nome: string, email: string, password: string) {
+// interface UpdateUserData extends Partial<CreateUserData> {}
+
+export async function createUser({name, email, password}: CreateUserData) {
     try {
-        const { data } = await api.post('/users/register', { nome, email, password })
-        console.log(data)
+        const { data } = await api.post('/users/register', { name, email, password })
+        toast.success("Usuário cadastrado com sucesso")
         return data
     }
-    catch (err) {
-        console.log("erro no front", err)
+    catch (err: any) {
+        const message = err.response?.data?.message || "Erro ao cadastrar usuário"
+        toast.error(message)
+        throw err
     }
 }
 
@@ -21,11 +26,11 @@ export async function loginUser(email: string, password: string) {
     try {
         const { data } = await api.post('/auth/login', { email, password })
         localStorage.setItem("token", data.token)
-        console.log(data.token)
+        toast.success("Login realizado com sucesso")
         return data
     }
-    catch (err) {
-        console.log("erro ao logar", err)
+    catch {
+        toast.error("E-mail ou senha inválidos")
     }
 }
 
@@ -35,14 +40,15 @@ export async function getUser() {
     return data
 }
 
-export  async function updateUser(typeData: UpdateUserData) {
-    const { data } = await api.patch('/users/me', typeData)
-    console.log(data)
-    return data
-}
+// export  async function updateUser(typeData: UpdateUserData) {
+//     const { data } = await api.patch('/users/me', typeData)
+//     console.log(data)
+//     return data
+// }
 
-export  async function deleteUser() {
-    const res = await api.delete('/users/me')
+// export  async function deleteUser() {
+//     const res = await api.delete('/users/me')
     
-    return res
-}
+//     return res
+// }
+

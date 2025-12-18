@@ -2,13 +2,13 @@ import { createContext } from "react"
 
 interface User {
     id: string;
-    nome: string;
+    name: string;
     email: string
 }
 
 interface UserContextType {
-    nome: string;
-    setNome: (nome: string) => void;
+    name: string;
+    setName: (nome: string) => void;
     email: string;
     setEmail: (email: string) => void;
     password: string;

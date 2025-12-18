@@ -2,17 +2,19 @@ import { createContext } from "react"
 
 interface Product {
     id: string;
-    nome: string;
-    quantidade: number;
-    estoqueMin: number;
-    categoria: string
+    name: string;
+    quantity: number;
+    minQuantity: number;
+    category: string
 }
 
 interface ProductContextType {
+    product: Product | null;
+    setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
     products: Product[];
     setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
-    nameProduct: string;
-    setNameProduct: (nameProduct: string) => void;
+    name: string;
+    setName: (nameProduct: string) => void;
     quantity: number;
     setQuantity: (quantity: number) => void;
     minQuantity: number;
@@ -21,6 +23,10 @@ interface ProductContextType {
     setCategory: (category: string) => void
     openModal: boolean;
     setOpenModal: (openModal: boolean) => void
+    openEditModal: boolean;
+    setOpenEditModal: (openModal: boolean) => void
+    id: string;
+    setId: (id: string) => void;
 }
 
 const CreateProductContext = createContext<ProductContextType | undefined>(undefined)

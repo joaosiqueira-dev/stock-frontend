@@ -1,19 +1,24 @@
 import iconAdd from "../../assets/apple-touch-icon.png";
 import iconBox from "../../assets/caixa.png";
 import iconAlert from "../../assets/alerta.png";
+import iconExit from "../../assets/sair.png"
 import { useContext, useEffect } from "react";
 import CreateProductContext from "../../contexts/productContexts";
-import { createProduct, getProducts } from "../../services/utils/product";
+import { createProduct, getProductById, getProducts } from "../../services/utils/product";
 import { getUser } from "../../services/utils/user";
 import CreateUserContext from "../../contexts/userContext";
+import EditProduct from "../../Components/modalEditProduct";
+import { useNavigate } from "react-router-dom";
 
 function Products() {
   const { user, setUser } = useContext(CreateUserContext)!
+  const navigate = useNavigate()
   const {
+    setId,
     products,
     setProducts,
-    nameProduct,
-    setNameProduct,
+    name,
+    setName,
     quantity,
     setQuantity,
     minQuantity,
@@ -21,12 +26,17 @@ function Products() {
     category,
     setCategory,
     openModal,
-    setOpenModal
+    setOpenModal,
+    setOpenEditModal
   } = useContext(CreateProductContext)!;
 
   async function showProducts() {
       setProducts(await getProducts());
     }
+  function handleLogout() {
+  localStorage.removeItem("token")
+  navigate("/sign-in")
+}
 
   useEffect(() => {
     async function showUserName() {
@@ -37,17 +47,18 @@ function Products() {
     showProducts();
   }, []);
   return (
-    <div className="flex bg-[#1F2937] w-full h-full">
+    <div className="flex bg-[#1F2937] w-full h-[100vh]">
+      <EditProduct />
       {openModal && (
-        <div className="w-full h-full flex items-center justify-center absolute bg-[rgba(0,0,0,0.5)]">
+        <div className="w-full h-full flex items-center justify-center fixed bg-[rgba(0,0,0,0.5)]">
           <div className="w-120 gap-2 p-4 flex flex-col p-2 text-white rounded-md bg-[#0F172A]">
             <p>Nome do produto:</p>
             <input
               className="w-full border rounded-md p-2 outline-none"
               type="text"
               placeholder="Ex: Arroz"
-              value={nameProduct}
-              onChange={(e) => setNameProduct(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
 
             <p>Quantidade:</p>
@@ -86,9 +97,14 @@ function Products() {
               <button
                 type="button"
                 className="px-8 py-2 rounded-md border hover:bg-white hover:text-black font-semibold cursor-pointer"
-                onClick={() => {
-                  createProduct(nameProduct, quantity, minQuantity, category)
-                  showProducts()
+                onClick={async () => {
+                  if (!name || !category || quantity <= 0 || minQuantity <= 0) {
+                    alert("Preencha todos os campos corretamente")
+                    return
+                  }
+                  await createProduct({name, quantity, minQuantity, category})
+                  await getProducts()
+                  await showProducts()
                   setOpenModal(!openModal)
                 }
                 }
@@ -103,7 +119,7 @@ function Products() {
         <div className=" w-full flex px-4 flex-col text-white font-semibold">
           {
             user && (
-                <h1 className=" py-2 text-xl capitalize">Dashboard - {user.nome}</h1>
+                <h1 className=" py-2 text-xl capitalize">Dashboard - {user.name}</h1>
             )
           }
           <div className="flex flex-col px-2 mb-6">
@@ -120,7 +136,7 @@ function Products() {
             </div>
 
             <div
-              className=" w-70 h-30 bg-[#0F172A] rounded-xl p-2 border-t-8 border-[#A178F1]"
+              className=" w-70 h-30 bg-[#0F172A] rounded-xl p-2 border-t-8 border-[#A178F1] cursor-pointer"
               onClick={() => setOpenModal(true)}
             >
               <p className="text-lg">Adicionar Produtos</p>
@@ -131,17 +147,26 @@ function Products() {
             <div className=" w-70 h-30 bg-[#0F172A] flex rounded-xl p-2 border-t-8 border-[#FF3365]">
               <div className="w-full">
                 <p className="text-lg">Baixo Estoque</p>
-                <p className="text-3xl">{products.filter(product => product.quantidade < product.estoqueMin).length}</p>
+                <p className="text-3xl">{products.filter(product => product.quantity < product.minQuantity).length}</p>
               </div>
               <div className="w-full flex h-15 mt-7 justify-end">
                 <img src={iconAlert} alt="" />
               </div>
             </div>
+            <div className=" w-70 h-30 bg-[#0F172A] flex rounded-xl p-2 border-t-8 border-[#FFC048] cursor-pointer" onClick={() => handleLogout()}>
+              <div className="w-full">
+                <p className="text-lg">Sair</p>
+                
+              </div>
+              <div className="w-full flex h-17 mt-7 justify-end">
+                <img src={iconExit} alt="" />
+              </div>
+            </div>
           </div>
         </div>
 
-        {products && (
-  <div className="bg-[#0F172A] px-4 py-4 rounded-md mt-8 w-full text-white">
+  {products.length > 0 && (
+  <div className="bg-[#0F172A] px-4 py-2 rounded-md mt-8 w-full text-white">
     <div className="overflow-x-auto">
       <table className="min-w-full text-left border-collapse">
         <thead className="bg-[#1E293B]">
@@ -160,17 +185,26 @@ function Products() {
               key={product.id}
               className="border-b border-gray-700 hover:bg-[#1E293B] transition"
             >
-              <td className="px-4 py-3">{product.nome}</td>
-              <td className="px-4 py-3">{product.categoria}</td>
-              <td className="px-4 py-3">{product.quantidade}</td>
+              <td className="px-4 py-3">{product.name}</td>
+              <td className="px-4 py-3">{product.category}</td>
+              <td className="px-4 py-3">{product.quantity}</td>
               <td className="px-4 py-3">
-                {product.quantidade < product.estoqueMin ? (
+                {product.quantity < product.minQuantity ? (
                   <span className="text-red-400 font-semibold">Estoque Baixo</span>
                 ) : (
                   <span className="text-green-400 font-semibold">OK</span>
                 )}
               </td>
-              <td className="px-4 py-3 text-blue-400 cursor-pointer hover:underline">
+              <td onClick={() => {
+                getProductById(product.id)
+                setId(product.id)
+                setOpenEditModal(true)
+                setName(product.name)
+                setCategory(product.category)
+                setQuantity(product.quantity)
+                setMinQuantity(product.minQuantity)
+              } 
+              } className="px-4 py-3 text-blue-400 cursor-pointer hover:underline">
                 Editar produto
               </td>
             </tr>
