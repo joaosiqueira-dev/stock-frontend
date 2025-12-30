@@ -90,7 +90,14 @@ function Products() {
             <div className="flex m-2 justify-evenly w-full">
               <button
                 className="px-8 py-2 rounded-md border hover:bg-red-700 font-semibold cursor-pointer"
-                onClick={() => setOpenModal(!openModal)}
+                onClick={() => {
+                  setOpenModal(!openModal)
+                  setName("")
+                  setCategory("")
+                  setQuantity(0)
+                  setMinQuantity(0)
+                }
+                } 
               >
                 Cancelar
               </button>
