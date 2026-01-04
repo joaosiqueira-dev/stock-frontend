@@ -7,18 +7,18 @@ This project was created to strengthen my understanding of how frontend and back
 ---
 
 ## 🚀 Features
-
+```bash
 - User authentication with protected routes  
 - Product registration, update, and deletion  
 - Stock quantity control with minimum quantity alerts  
 - Secure communication between frontend and backend  
 - Error handling and user feedback  
 - Persistent data storage  
-
+```
 ---
 
 ## 🛠️ Technologies Used
-
+```bash
 ### Frontend
 - React  
 - TypeScript  
@@ -32,24 +32,24 @@ This project was created to strengthen my understanding of how frontend and back
 - Fastify  
 - TypeScript  
 - Prisma ORM  
-- PostgreSQL *(or MongoDB — adjust if needed)*  
+- PostgreSQL  
 - JWT Authentication  
 
 ### Other
 - Docker (database environment)  
 - Git & GitHub  
 - Environment variables (.env)  
-
+```
 ---
 
 ## 🧠 What I Learned
-
+```bash
 - How to structure a full-stack application  
 - Implementing authentication and protected routes  
 - Applying business rules on the backend  
 - Handling errors gracefully on the frontend  
 - Managing environment variables and deployment challenges  
-
+```
 ---
 
 ## 🌐 Live Project
@@ -59,21 +59,40 @@ This project was created to strengthen my understanding of how frontend and back
 
 ---
 
-## 📂 Project Structure (simplified)
-.
-<br/>
-├── frontend
-<br/>
-└── backend
+## 📂 Project Structure
+
+```bash
+stock-frontend/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── pages/
+│   ├── routes/
+│   ├── services/
+│   ├── contexts/
+│   ├── styles/
+│   └── main.tsx
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── vercel.json
+└── README.md
+```
 
 ## ▶️ How to Run Locally <br/>
-- Clone the repository <br/>
-- git clone https://github.com/your-username/stock-project <br/>
-- Install dependencies <br/>
-- npm install <br/>
-- Configure environment variables <br/>
-- Run the database using Docker <br/>
-- Start backend and frontend servers <br/>
+```bash
+- Clone the repository 
+- git clone https://github.com/your-username/stock-project 
+- Install dependencies 
+- npm install 
+- Configure environment variables 
+- Run the database using Docker 
+- Start backend and frontend servers 
+```
 
 👨‍💻 Author
 João Siqueira <br/>
