@@ -61,20 +61,22 @@ This project was created to strengthen my understanding of how frontend and back
 
 ## 📂 Project Structure (simplified)
 .
+<br/>
 ├── frontend
+<br/>
 └── backend
 
-▶️ How to Run Locally
-Clone the repository
-git clone https://github.com/your-username/stock-project
-Install dependencies
-npm install
-Configure environment variables
-Run the database using Docker
-Start backend and frontend servers
+## ▶️ How to Run Locally <br/>
+- Clone the repository <br/>
+- git clone https://github.com/your-username/stock-project <br/>
+- Install dependencies <br/>
+- npm install <br/>
+- Configure environment variables <br/>
+- Run the database using Docker <br/>
+- Start backend and frontend servers <br/>
 
 👨‍💻 Author
-João Siqueira
-Front-end focused Full Stack Developer
-🔗 LinkedIn: https://www.linkedin.com/in/joao-vitor-dos-santos-siqueira/
+João Siqueira <br/>
+Front-end focused Full Stack Developer <br/>
+🔗 LinkedIn: https://www.linkedin.com/in/joao-vitor-dos-santos-siqueira/ <br/>
 📧 Email: joaovitor.siq8@gmail.com
