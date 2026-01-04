@@ -1,5 +1,9 @@
 # 📦 Stock Control System
 
+## 🎥 Demo
+
+![Stock Control System – Demo](stock-frontend/src/assets/demo-video.gif)
+
 A full-stack stock control system developed to simulate real-world inventory management scenarios, focusing on authentication, data security, and business rules.
 
 This project was created to strengthen my understanding of how frontend and backend applications communicate in a real production-like environment.
