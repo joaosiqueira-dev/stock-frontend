@@ -65,15 +65,13 @@ This project was created to strengthen my understanding of how frontend and back
 └── backend
 
 ▶️ How to Run Locally
-# Clone the repository
+Clone the repository
 git clone https://github.com/your-username/stock-project
-
-# Install dependencies
+Install dependencies
 npm install
-
-# Configure environment variables
-# Run the database using Docker
-# Start backend and frontend servers
+Configure environment variables
+Run the database using Docker
+Start backend and frontend servers
 
 👨‍💻 Author
 João Siqueira
